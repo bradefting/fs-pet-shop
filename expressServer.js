@@ -29,8 +29,29 @@ app.get('/pets/:id', function(req, res){
   }
 });
 
-app.listen('3001', function(){
-  console.log('Server 3001 started');
+app.post('/pets', function(req, res){
+  var newPet = req.body;
+
+  if (!newPet.age || !newPet.kind || !newPet.name) {
+    return res.sendStatus(400);
+  }else if(!newPet.age && !newPet.kind && !newPet.name) {
+    return res.sendStatus(404);
+  }
+
+  var addPet = {};
+
+  addPet.age = Number.parseInt(newPet.age);
+  addPet.kind = newPet.kind;
+  addPet.name = newPet.name;
+
+  pets.push(addPet);
+
+  res.send(pets);
+
+});
+
+app.listen('8080', function(){
+  console.log('Server 8080 started');
 });
 
 module.exports = app;
