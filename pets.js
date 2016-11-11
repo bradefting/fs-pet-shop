@@ -23,9 +23,8 @@ if(cmd ==='read'){
     }
 
     var pets = JSON.parse(data);
-    var numPets = pets.length;
 
-    if(petIndex >= 0 && petIndex < numPets){
+    if(petIndex >= 0 && petIndex < pets.length){
       console.log(pets[petIndex]);
     }else if(!petIndex){
       console.log(pets);
@@ -37,9 +36,9 @@ if(cmd ==='read'){
   });
 }
 else if (cmd === 'create') {
-  fs.readFile(petPath, 'utf8', function(readErr, data) {
-    if (readErr) {
-      throw readErr;
+  fs.readFile(petPath, 'utf8', function(err, data) {
+    if (err) {
+      throw err;
     }
 
     //declare argv's
@@ -76,13 +75,70 @@ else if (cmd === 'create') {
   });
 }
 else if(cmd === 'update'){
+  fs.readFile(petPath, 'utf8', function(err, data) {
+    if (err) {
+      throw err;
+    }
 
-  console.log('update');
+    //declare argv's
+    var pets = JSON.parse(data);
+    var petIndex = parseInt(process.argv[3]);
+    var pAge = parseInt(process.argv[4]);
+    var pKind = process.argv[5];
+    var pName = process.argv[6];
+
+    // petPath = /Users/brade/galvanize/node/fs-pet-shop/pets.json
+
+    if(petIndex >= 0 && petIndex < pets.length & pAge && pKind && pName){
+      pets[petIndex].age = pAge;
+      pets[petIndex].kind = pKind;
+      pets[petIndex].name = pName;
+
+      var petJSON = JSON.stringify(pets);
+
+      fs.writeFile(petPath, petJSON, function(writeErr){
+        if(writeErr){
+          throw writeErr;
+        }
+
+          console.log(pets[petIndex]);
+
+      });
+
+    }else{
+      console.error(`Usage: ${node} ${file} ${cmd} INDEX AGE KIND NAME`);
+      process.exit(1);
+    }
+
+  });
 }
 else if(cmd === 'destroy'){
-  console.log('destroy');
-}
+  var petIndex = process.argv[3];
+  fs.readFile(petPath, 'utf8', function(err, data) {
+    if (err) {
+      throw err;
+    }
 
+    var pets = JSON.parse(data);
+
+    if(petIndex >= 0 && petIndex < pets.length){
+      console.log(pets[petIndex]);
+      pets.splice(petIndex, 1);
+
+      var petJSON = JSON.stringify(pets);
+
+      fs.writeFile(petPath, petJSON, function(writeErr){
+        if(writeErr){
+          throw writeErr;
+        }
+      });
+
+    }else{
+      console.error(`Usage: ${node} ${file} ${cmd} INDEX`);
+      process.exit(1);
+    }
+  });
+}
 else{
   console.error(`Usage: ${node} ${file} [read | create | update | destroy]`);
   process.exit(1);
