@@ -29,6 +29,34 @@ app.get('/pets/:id', function(req, res){
   }
 });
 
+app.post('/pets', function(req, res){
+  //this rule doesnt work
+  if(!req.body){
+    return res.sendStatus(404);
+  }
+
+  var newPet = req.body;
+
+  if (!newPet.age || !newPet.kind || !newPet.name) {
+    return res.sendStatus(400);
+  }
+  //same as above doesnt work
+  // else if(!newPet.age && !newPet.kind && !newPet.name) {
+  //   return res.sendStatus(404);
+  // }
+
+  var addPet = {};
+
+  addPet.age = Number.parseInt(newPet.age);
+  addPet.kind = newPet.kind;
+  addPet.name = newPet.name;
+
+  pets.push(addPet);
+
+  res.send(pets);
+
+});
+
 app.listen('8080', function(){
   console.log('Server 8080 started');
 });
