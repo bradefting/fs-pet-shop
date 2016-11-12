@@ -36,7 +36,7 @@ app.get('/pets/:id', function(req, res){
     }
     var pets = JSON.parse(data);
 
-    var petIndex = req.params.id;
+    var petIndex = Number.parseInt(req.params.id);
     var numPets = pets.length;
 
     if(petIndex >=0 && petIndex<numPets){
@@ -89,7 +89,11 @@ app.post('/pets', function(req, res){
 });
 
 app.put('/pets/:index', function(req, res){
-  var index = req.params.index;
+  var index = Number.paresInt(req.params.index);
+
+  if(!index){
+    return res.sendStatus(400);
+  }
 
   fs.readFile(petPath, 'utf8', function(err, data) {
     if (err) {
@@ -123,6 +127,35 @@ app.put('/pets/:index', function(req, res){
       res.send(pets[index]);
 
     });
+  });
+});
+
+app.delete('/pets/:index', function (req, res){
+  var index = Number.parseInt(req.params.index);
+
+  // if(!index){
+  //   return res.sendStatus(400);
+  // }
+
+  fs.readFile(petPath, 'utf8', function(err, data){
+    if(err){
+      throw err;
+    }
+    var pets = JSON.parse(data);
+
+    res.send(pets[index]);
+
+    pets.splice(index,1);
+
+    var petJSON = JSON.stringify(pets);
+
+    fs.writeFile(petPath, petJSON, function(writeErr){
+      if(writeErr){
+        throw writeErr;
+      }
+
+    });
+    console.log(pets);
   });
 });
 
