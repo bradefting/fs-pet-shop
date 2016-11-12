@@ -9,6 +9,7 @@ app.use(morgan('short'));
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
+//read pet.json this way to only "get"/fs.read/write when making changes(pt4)
 var pets = require('./pets.json');
 
 // app.use(express.static('public'));

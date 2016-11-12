@@ -8,7 +8,6 @@ var fs = require('fs');
 var path = require('path');
 //creates path to pwd
 var petPath = path.join(__dirname, 'pets.json');
-// console.log(petPath);
 
 var node = path.basename(process.argv[0]);
 var file = path.basename(process.argv[1]);
