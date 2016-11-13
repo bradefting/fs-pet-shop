@@ -89,7 +89,7 @@ app.post('/pets', function(req, res){
 });
 
 app.put('/pets/:index', function(req, res){
-  var index = Number.paresInt(req.params.index);
+  var index = Number.parseInt(req.params.index);
 
   if(!index){
     return res.sendStatus(400);
