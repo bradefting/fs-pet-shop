@@ -1,13 +1,17 @@
+#! /Users/brade/.nvm/versions/node/v7.0.0/bin/node
+
 'use strict';
-module.exports = {
-    "extends": "eslint:recommended"
-};
+// module.exports = {
+//     "extends": "eslint:recommended"
+// };
+
 //gets file system to use
 var fs = require('fs');
 //gets path to use
 var path = require('path');
 //creates path to pwd
 var petPath = path.join(__dirname, 'pets.json');
+
 
 var node = path.basename(process.argv[0]);
 var file = path.basename(process.argv[1]);
