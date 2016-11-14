@@ -12,7 +12,6 @@ var path = require('path');
 //creates path to pwd
 var petPath = path.join(__dirname, 'pets.json');
 
-
 var node = path.basename(process.argv[0]);
 var file = path.basename(process.argv[1]);
 var cmd = process.argv[2];
@@ -89,8 +88,6 @@ else if(cmd === 'update'){
     var pAge = parseInt(process.argv[4]);
     var pKind = process.argv[5];
     var pName = process.argv[6];
-
-    // petPath = /Users/brade/galvanize/node/fs-pet-shop/pets.json
 
     if(petIndex >= 0 && petIndex < pets.length & pAge && pKind && pName){
       pets[petIndex].age = pAge;
