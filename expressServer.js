@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 // var pets = require('./pets.json');
 
 app.get('/pets', function(req, res){
-  fs.readFile('petsPath', 'utf8', function(err, data){
+  fs.readFile(petsPath, 'utf8', function(err, data){
     if (err){
       console.error(err.stack);
       return res.sendStatus(500);
@@ -29,10 +29,10 @@ app.get('/pets', function(req, res){
 });
 
 app.get('/pets/:id', function(req, res){
-  fs.readFile('petsPath', 'utf8', function(err, data){
+  fs.readFile(petsPath, 'utf8', function(err, data){
     if (err){
       console.error(err.stack);
-      return res.sendStatus(500);
+      return res.sendStatus(404);
     }
     var pets = JSON.parse(data);
 
